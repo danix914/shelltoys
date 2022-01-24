@@ -89,3 +89,9 @@ def run_shell_cmd(cmd,
         print('\n=== result ===\nSTDOUT:\n{}\nSTDERR:\n{}'.format(out, err))
         print('=== Exit code: {} (command: `{}`) ===\n'.format(p.returncode, human_cmd))
     return (p, out, err)
+
+
+def live_as_shell_cmd(cmd):
+    """Execute command via Python and show as STDOUT
+    """
+    return run_shell_cmd(cmd, live=True, show_result=False, cmd_info=False)
