@@ -50,6 +50,13 @@ def run_shell_cmd(cmd,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if live:
+        # an UTF-8 encoded character has 1 to 4 byte(s)
+        # first 5-bit defined number of byte the character used
+        # (c < 128)(ASCII) 0xxx xxxx
+        # (192 <= c < 224) 110x xxxx  10xx xxxx
+        # (224 <= c < 240) 1110 xxxx  10xx xxxx  10xx xxxx
+        # (240 <= c < 248) 1111 0xxx  10xx xxxx  10xx xxxx  10xx xxxx
+
         out = b''
         for bchar in iter(lambda: p.stdout.read(1), b''):
             out += bchar
