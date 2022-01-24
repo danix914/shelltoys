@@ -76,7 +76,9 @@ def run_shell_cmd(cmd,
                 char = bchar.decode('utf8', 'backslashreplace')
 
             sys.stdout.write(char)
-            # Python's standard out is buffered (meaning that it collects some of the data "written" to standard out before it writes it to the terminal).
+            # Python's standard out is buffered
+            # (meaning that it collects some of the data "written"
+            #  to standard out before it writes it to the terminal).
             # Calling sys.stdout.flush() forces it to "flush" the buffer
             sys.stdout.flush()
         _, err = p.communicate()
@@ -86,8 +88,8 @@ def run_shell_cmd(cmd,
     err = err.decode('utf8', 'backslashreplace')
 
     if show_result:
-        print('\n=== result ===\nSTDOUT:\n{}\nSTDERR:\n{}'.format(out, err))
-        print('=== Exit code: {} (command: `{}`) ===\n'.format(p.returncode, human_cmd))
+        print(f'\n=== result ===\nSTDOUT:\n{out}\nSTDERR:\n{err}')
+        print(f'=== Exit code: {p.returncode} (command: `{human_cmd}`) ===\n')
     return (p, out, err)
 
 
