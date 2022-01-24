@@ -1,8 +1,11 @@
 # wowi
 
 ~~artificial intelligence~~
+
 ~~wisdom workers~~
+
 **wo**rkman's **wi**sdom
+
 Avoid to reinvent the wheels, handle general behaviors under Linux/shell......for daily development.
 
 
@@ -23,6 +26,7 @@ Avoid to reinvent the wheels, handle general behaviors under Linux/shell......fo
 
     e.g.:   `countdown(3)`
 
+&nbsp;
 
 
 -   ```python
@@ -47,6 +51,7 @@ Avoid to reinvent the wheels, handle general behaviors under Linux/shell......fo
     -   `proc, out, err = run_shell_cmd('tar zxvf test.tar.gz', live=True)`
     -   `run_shell_cmd('yum -y install tree')`
 
+&nbsp;
 
 
 -   ```python
@@ -55,6 +60,8 @@ Avoid to reinvent the wheels, handle general behaviors under Linux/shell......fo
     ```
 
     execute commands via python, and show as linux output
+
+&nbsp;
 
 
 -   ```python
@@ -69,3 +76,5 @@ Avoid to reinvent the wheels, handle general behaviors under Linux/shell......fo
     -   `path = resolve_path('.')`
     -   `path = resolve_path('~det/Code')`
     -   `path = resolve_path('../../foobar/')`
+
+&nbsp;
