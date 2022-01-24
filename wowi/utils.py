@@ -1,3 +1,4 @@
+from pathlib import Path
 import subprocess
 import sys
 import time
@@ -97,3 +98,18 @@ def live_as_shell_cmd(cmd):
     """Execute command via Python and show as STDOUT
     """
     return run_shell_cmd(cmd, live=True, show_result=False, cmd_info=False)
+
+
+def resolve_path(input_path):
+    """Convert string to pathlib.Path object and resolve it.
+
+        Usage example:
+
+        path = resolve_path('.')
+        path = resolve_path('~det/Code')
+        path = resolve_path('../../foobar/')
+    """
+    path = Path(input_path)
+    if isinstance(input_path, str) and input_path.startswith('~'):
+        path = path.expanduser()
+    return path.resolve()

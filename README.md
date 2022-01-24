@@ -55,3 +55,17 @@ Avoid to reinvent the wheels, handle general behaviors under Linux/shell......fo
     ```
 
     execute commands via python, and show as linux output
+
+
+-   ```python
+    resolve_path(input_path: Union[str, pathlib.Path]) -> pathlib.Path:
+    ```
+
+    Convert string to pathlib.Path object and resolve it.
+
+    -   `input_path`: path as string
+
+    e.g.:
+    -   `path = resolve_path('.')`
+    -   `path = resolve_path('~det/Code')`
+    -   `path = resolve_path('../../foobar/')`
