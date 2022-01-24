@@ -3,6 +3,8 @@ import subprocess
 import sys
 import time
 
+import yaml
+
 
 def countdown(seconds, prefix_message='countdown'):
     """Wrapper for countdown, sleep, and display specified message.
@@ -113,3 +115,33 @@ def resolve_path(input_path):
     if isinstance(input_path, str) and input_path.startswith('~'):
         path = path.expanduser()
     return path.resolve()
+
+
+def dir2yaml(path):
+    """List and sort target path recursively, return as YAML format string.
+
+        Usage example:
+
+        yamltext = dir2yaml('/tmp/foobar')
+        print(dir2yaml(Path('~/Desktop/')))
+    """
+    if not isinstance(path, Path):
+        path = resolve_path(path)
+
+    def recd(path):
+        name = path.name
+        dirs = {}
+        dirs[name] = []
+        for subpath in sorted(path.iterdir()):
+            if subpath.is_file():
+                dirs[name].append(subpath.name)
+            elif subpath.is_dir():
+                dirs[name].append(recd(subpath))
+        return dirs
+
+    if path.is_file():
+        content = [path.name]
+    else:
+        content = recd(path)
+    yamlstr = yaml.dump(content)
+    return yamlstr

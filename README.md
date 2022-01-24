@@ -78,3 +78,18 @@ Avoid to reinvent the wheels, handle general behaviors under Linux/shell......fo
     -   `path = resolve_path('../../foobar/')`
 
 &nbsp;
+
+
+-   ```python
+    dir2yaml(path: Union[str, pathlib.Path]) -> str:
+    ```
+
+    List and sort target path recursively, return as YAML format string.
+
+    -   `path`: target path
+
+    e.g.:
+    -   `yamltext = dir2yaml('/tmp/foobar')`
+    -   `print(dir2yaml(Path('~/Desktop/')))`
+
+&nbsp;

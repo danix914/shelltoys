@@ -18,4 +18,7 @@ setuptools.setup(
         "Operating System :: POSIX :: Linux",
     ],
     python_requires='>=3.5',
+    install_requires=[
+        'PyYAML',
+    ],
 )
