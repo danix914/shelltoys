@@ -1,7 +1,9 @@
 import unittest
 
+from wowi.patterns import Singleton
 
-class IWasTheOne:
+
+class IWasTheOne(metaclass=Singleton):
     def __init__(self):
         pass
 
