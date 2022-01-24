@@ -25,14 +25,18 @@ def run_shell_cmd(cmd,
                   *,
                   show_cmd_newline=True,
                   cmd_info=True,
+                  live=False,
                   show_result=True):
     """Execute linux commands via subprocess.Popen
 
     Run commands via Popen, then return Popen object, STDOUT and STDERR.
+    When call this function with enabled 'live' option,
+    it will replace non-printable byte to '\\xNN'
 
         Usage example:
 
         proc, _, __ = run_shell_cmd('/tmp/myScript.sh')
+        proc, out, err = run_shell_cmd('tar zxvf test.tar.gz', live=True)
         run_shell_cmd('yum -y install tree')
     """
     if show_cmd_newline:
@@ -44,7 +48,33 @@ def run_shell_cmd(cmd,
               '  please wait a minute...')
     p = subprocess.Popen(cmd, shell=True,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = p.communicate()
+
+    if live:
+        out = b''
+        for bchar in iter(lambda: p.stdout.read(1), b''):
+            out += bchar
+            temp = 0b01111111
+            bint = bchar[0]
+            char = None
+            for ele in range(-1, 4):
+                if bint < 255 - temp:  # 128 -> 192 -> 224 -> 240 -> 248
+                    if ele > 0:
+                        otherbytes = p.stdout.read1(ele)
+                        out += otherbytes
+                        bchar += otherbytes
+                    char = bchar.decode('utf8', 'backslashreplace')
+                    break
+                temp >>= 1  # 0x7f -> 0x3f -> 0x1f -> 0x0f -> 0x07
+            if char is None:
+                char = bchar.decode('utf8', 'backslashreplace')
+
+            sys.stdout.write(char)
+            # Python's standard out is buffered (meaning that it collects some of the data "written" to standard out before it writes it to the terminal).
+            # Calling sys.stdout.flush() forces it to "flush" the buffer
+            sys.stdout.flush()
+        _, err = p.communicate()
+    else:
+        out, err = p.communicate()
     out = out.decode('utf8', 'backslashreplace')
     err = err.decode('utf8', 'backslashreplace')
 
